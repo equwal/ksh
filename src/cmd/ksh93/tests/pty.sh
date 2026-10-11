@@ -1505,5 +1505,56 @@ w echo bar　uux\Ebiq
 u ^bar　quux\r\n$
 !
 
+((SHOPT_VSH)) && VISUAL=vi tst $LINENO << "!"
+L vi mode text objects
+
+d 15
+p :test-1:
+w echo foo bar baz\E0fbciwqux
+u ^foo qux baz\r\n$
+p :test-2:
+w echo foo bar baz\E0fbdaw
+u ^foo baz\r\n$
+p :test-3:
+w echo foo bar\Edaw
+u ^foo\r\n$
+p :test-4:
+w echo a foo-bar b\E0ffciWx
+u ^a x b\r\n$
+p :test-5:
+w echo a b c d\E0fbdaw.
+u ^a d\r\n$
+p :test-6:
+w echo a b c d\E0fb2daw
+u ^a d\r\n$
+p :test-7:
+w echo a b c d\E0fbd2aw
+u ^a d\r\n$
+p :test-8:
+w echo foo bar\E0ffyiw$p
+u ^foo barfoo\r\n$
+p :test-9:
+w echo foo bar\E0ffdawu
+u ^foo bar\r\n$
+p :test-10:
+w echo "foo bar" baz\E0ci"qux
+u ^qux baz\r\n$
+p :test-11:
+w echo x""y\E0f"ci"z
+u ^xzy\r\n$
+p :test-12:
+w print -r -- '<a<b>c>'\E0fbdi<
+u ^<a<>c>\r\n$
+p :test-13:
+w print -r -- '(a(b)c)'\E0fbd2ib
+u ^\(\)\r\n$
+p :test-14:
+w print -r -- 'x[a]y'\E0fada]
+u ^xy\r\n$
+p :test-15:
+w echo foo\Edi(
+u ^foo\r\n$
+!
+
 # ======
 exit $((Errors<125?Errors:125))

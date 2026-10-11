@@ -1554,6 +1554,21 @@ u ^xy\r\n$
 p :test-15:
 w echo foo\Edi(
 u ^foo\r\n$
+p :test-16:
+w print -r -- 'a "b" c "d" e'\E0fcdi"
+u ^a "b""d" e\r\n$
+p :test-17:
+w print -r -- 'x (a b) y'\E0di(
+u ^x \(\) y\r\n$
+p :test-18:
+w print -r -- '(a ")" b)'\E0fadi(
+u ^\(\)\r\n$
+p :test-19:
+w echo foo\E3daw
+u ^foo\r\n$
+p :test-20:
+w echo foo bar\E0fbciwx\E$p
+u ^foo xbar\r\n$
 !
 
 # ======

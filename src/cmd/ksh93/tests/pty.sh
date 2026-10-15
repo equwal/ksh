@@ -1571,5 +1571,15 @@ w echo foo bar\E0fbciwx\E$p
 u ^foo xbar\r\n$
 !
 
+((SHOPT_VSH)) && VISUAL=vi tst $LINENO << "!"
+L vi mode backspace erases text from before the insert
+d 15
+p :test-1:
+w echo abcd\Ea\b\b
+u ^ab\r\n$
+p :test-2:
+w echo abcd\Ei\b\b
+u ^ad\r\n$
+!
 # ======
 exit $((Errors<125?Errors:125))

@@ -1572,7 +1572,12 @@ static void get_line(Vi_t* vp,int mode)
 					continue;
 				}
 				else
+				{
+					/*** like vim backspace=start: erase text from before this insert too ***/
+					if( cur_virt >= 0 && cur_virt < first_virt )
+						first_virt = cur_virt;
 					cdelete(vp,1, BAD);
+				}
 			}
 			break;
 
